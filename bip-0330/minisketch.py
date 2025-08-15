@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+import random
+
 ######## ENCODING and DECODING ########
 
 FIELD_BITS = 32
@@ -30,8 +32,6 @@ def sketch(shortids, capacity):
     return b''.join(elem.to_bytes(4, 'little') for elem in odd_sums)
 
 ######## DECODING only ########
-
-import random
 
 def inv(x):
     """Compute 1/x in GF(2^FIELD_BITS)"""
@@ -142,7 +142,7 @@ def find_roots(p):
     if len(t2):
         return None
     # Invoke the recursive splitting algorithm
-    return find_roots_inner(list(p), random.randrange(1, 2**32-1))
+    return find_roots_inner(list(p), random.getrandbits(31) + 1)
 
 def decode(sketch):
     """Recover the shortids from a sketch."""
